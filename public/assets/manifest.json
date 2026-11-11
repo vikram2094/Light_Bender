@@ -1,0 +1,22 @@
+{
+  "project": "LIGHT BENDER",
+  "assetLibrary": {
+    "packs": [
+      "Pack A — Casual Game UI PNG / PSD Coco Games",
+      "Pack B — Game UI Pack Handmade Bakudas",
+      "Pack C — CGA UI Gold",
+      "Pack D — HyperCasual Game UI"
+    ],
+    "organization": {
+      "buttons": "public/assets/ui/buttons",
+      "icons": "public/assets/ui/icons",
+      "panels": "public/assets/ui/panels",
+      "popups": "public/assets/ui/popups"
+    },
+    "notes": [
+      "Preserve the original source packs exactly as provided.",
+      "Use these folders as a curated selection library for the game UI and never rename or destroy source assets.",
+      "The curated library is intentionally lightweight so it can be extended without affecting gameplay code."
+    ]
+  }
+}
