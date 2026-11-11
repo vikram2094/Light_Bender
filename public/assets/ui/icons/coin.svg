@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128" role="img" aria-label="Gold coin icon">
+  <defs>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#FFF3B1"/>
+      <stop offset="40%" stop-color="#F8D977"/>
+      <stop offset="100%" stop-color="#D89F24"/>
+    </linearGradient>
+  </defs>
+  <circle cx="64" cy="64" r="46" fill="url(#gold)" stroke="#FFE7A4" stroke-width="8"/>
+  <circle cx="64" cy="64" r="28" fill="none" stroke="#7D4C0D" stroke-width="5" opacity="0.8"/>
+  <path d="M64 30v68M30 64h68" stroke="#8C5A08" stroke-width="7" stroke-linecap="round" opacity="0.55"/>
+</svg>
