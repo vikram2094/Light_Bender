@@ -1,0 +1,988 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="theme-color" content="#080b1d" />
+  <meta name="description" content="LIGHT BENDER — One Beam. A Thousand Possibilities." />
+  <title>LIGHT BENDER</title>
+
+  <style>
+    /* =========================
+       LIGHT BENDER HOME SCREEN
+       (Phase 1 — premium neon)
+    ========================== */
+
+    #homeScreen {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      overflow-y: auto;
+      display: flex;
+      justify-content: center;
+      padding: 20px 16px;
+      background:
+        radial-gradient(circle at 20% 15%, rgba(255, 118, 201, 0.22), transparent 24%),
+        radial-gradient(circle at 80% 10%, rgba(57, 217, 255, 0.16), transparent 28%),
+        radial-gradient(circle at 50% 90%, rgba(108, 59, 255, 0.12), transparent 34%),
+        linear-gradient(180deg, #fffafc 0%, #f4eeff 48%, #f2f8ff 100%);
+      color: #201344;
+      font-family: Inter, system-ui, sans-serif;
+    }
+
+    #homeScreen.hidden {
+      display: none;
+    }
+
+    .home-container {
+      width: 100%;
+      max-width: 430px;
+      margin: auto;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* --- top row: brand + sound + wallet --- */
+
+    .home-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+
+    .home-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-align: left;
+    }
+
+    .home-brand-icon {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      border-radius: 14px;
+      font-size: 24px;
+      background: linear-gradient(135deg, #805aff, #27dff0);
+      box-shadow: 0 0 26px #7865ff80;
+    }
+
+    .home-brand-name {
+      font-size: 14px;
+      font-weight: 900;
+      letter-spacing: 2px;
+    }
+
+    .home-brand-tag {
+      color: #a7afd1;
+      font-size: 8px;
+      letter-spacing: 1px;
+      margin-top: 4px;
+    }
+
+    .home-top-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .home-sound-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 13px;
+      border: 1px solid #ffffff22;
+      background: #ffffff0d;
+      color: #cfe6ff;
+      font-size: 20px;
+      transition: background .2s, transform .2s;
+      display: grid;
+      place-items: center;
+      padding: 0;
+    }
+
+    .home-sound-btn img,
+    .home-wallet img,
+    .asset-button img,
+    .home-tile img,
+    .icon-btn img {
+      display: block;
+      width: 22px;
+      height: 22px;
+      object-fit: contain;
+      pointer-events: none;
+    }
+
+    .home-sound-btn:active {
+      transform: scale(.93);
+    }
+
+    .home-wallet {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 12px;
+      border-radius: 30px;
+      border: 1px solid #e8c76c55;
+      background: #e8c76c14;
+      color: #ffd66e;
+      font-weight: 800;
+      font-size: 13px;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .home-wallet img {
+      width: 20px;
+      height: 20px;
+      filter: drop-shadow(0 0 12px rgba(255, 210, 107, 0.8));
+    }
+
+    /* --- hero: title + tagline --- */
+
+    .home-eyebrow {
+      color: #8eeeff;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 4px;
+      margin-bottom: 10px;
+    }
+
+    .home-title {
+      font-size: clamp(38px, 10vw, 56px);
+      line-height: 1.02;
+      font-weight: 1000;
+      letter-spacing: 3px;
+      margin: 0;
+      background: linear-gradient(100deg, #ffffff, #b3a6ff 45%, #68efff);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      filter: drop-shadow(0 0 22px #8a78ff55);
+    }
+
+    .home-subtitle {
+      color: #b5bddc;
+      font-size: 10px;
+      letter-spacing: 3px;
+      margin-top: 11px;
+    }
+
+    /* --- crystal stage --- */
+
+    .home-crystal-stage {
+      width: 190px;
+      height: 190px;
+      margin: 18px auto 18px;
+      position: relative;
+      display: grid;
+      place-items: center;
+    }
+
+    .home-crystal-glow {
+      position: absolute;
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      background: #725dff;
+      filter: blur(60px);
+      opacity: .55;
+      animation: crystalGlow 3s ease-in-out infinite alternate;
+    }
+
+    .home-crystal-ring {
+      position: absolute;
+      width: 172px;
+      height: 172px;
+      border: 1px solid #72eaff55;
+      border-radius: 50%;
+      box-shadow: 0 0 35px #4b9dff22, inset 0 0 30px #4b9dff18;
+      animation: crystalRotate 16s linear infinite;
+    }
+
+    .home-crystal-ring::before,
+    .home-crystal-ring::after {
+      content: "";
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #8cf4ff;
+      box-shadow: 0 0 16px #65eaff;
+    }
+
+    .home-crystal-ring::before { top: 18px; left: 22px; }
+    .home-crystal-ring::after { bottom: 17px; right: 23px; }
+
+    .home-crystal-ring-two {
+      width: 128px;
+      height: 128px;
+      border-style: dashed;
+      border-color: #a08cff44;
+      box-shadow: none;
+      animation: crystalRotate 22s linear infinite reverse;
+    }
+
+    .home-crystal-ring-two::before,
+    .home-crystal-ring-two::after {
+      display: none;
+    }
+
+    .home-laser {
+      position: absolute;
+      height: 2px;
+      width: 230px;
+      border-radius: 2px;
+      background: linear-gradient(90deg, transparent, #8df8ff, #fff, #8df8ff, transparent);
+      box-shadow: 0 0 14px #66efff;
+      opacity: .75;
+    }
+
+    .home-laser-a {
+      transform: rotate(-26deg);
+      animation: laserPulse 2.6s ease-in-out infinite;
+    }
+
+    .home-laser-b {
+      transform: rotate(32deg);
+      opacity: .4;
+      animation: laserPulse 2.6s ease-in-out 1.3s infinite;
+    }
+
+    .home-crystal {
+      position: relative;
+      font-size: 88px;
+      line-height: 1;
+      color: #a6f7ff;
+      text-shadow:
+        0 0 12px #70edff,
+        0 0 35px #4e9dff,
+        0 0 70px #765dff;
+      animation: crystalFloat 3s ease-in-out infinite;
+    }
+
+    /* --- campaign progress card --- */
+
+    .home-campaign {
+      max-width: 330px;
+      margin: 0 auto 18px;
+      padding: 12px 14px;
+      border-radius: 16px;
+      border: 1px solid #ffffff18;
+      background: #ffffff0a;
+    }
+
+    .home-campaign-row {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .home-campaign-label {
+      color: #9aa5cf;
+      font-size: 8px;
+      font-weight: 900;
+      letter-spacing: 2px;
+    }
+
+    .home-campaign-value {
+      color: #eaf0ff;
+      font-size: 13px;
+      font-weight: 900;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .home-campaign-stars {
+      color: #ffd66e;
+      font-size: 10px;
+      font-weight: 800;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .home-campaign-track {
+      height: 5px;
+      margin-top: 9px;
+      border-radius: 999px;
+      background: #ffffff14;
+      overflow: hidden;
+    }
+
+    .home-campaign-bar {
+      height: 100%;
+      width: 1%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, #8a65ff, #39d7e8);
+      box-shadow: 0 0 12px #6c9fff88;
+      transition: width .4s ease;
+    }
+
+    .home-campaign-solved {
+      margin-top: 7px;
+      color: #8b95bd;
+      font-size: 8px;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+    }
+
+    /* --- primary buttons --- */
+
+    .home-buttons {
+      display: grid;
+      gap: 11px;
+      max-width: 330px;
+      margin: 0 auto;
+    }
+
+    .home-button {
+      min-height: 54px;
+      border-radius: 16px;
+      border: 1px solid #ffffff20;
+      font-size: 13px;
+      font-weight: 900;
+      letter-spacing: 2px;
+      cursor: pointer;
+      transition: transform .2s, filter .2s, box-shadow .2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 0 18px;
+    }
+
+    .home-button:active {
+      transform: scale(.97);
+    }
+
+    .home-button-primary {
+      color: #071326;
+      background: linear-gradient(100deg, #75f1ff, #9c8aff);
+      box-shadow: 0 8px 30px #6c9fff44, 0 0 24px #7ae6ff2e;
+    }
+
+    .home-button-play {
+      color: white;
+      background: linear-gradient(100deg, #7659e8, #3e8edc);
+      box-shadow: 0 8px 25px #665cff30;
+    }
+
+    .asset-button img {
+      width: 28px;
+      height: 28px;
+      filter: drop-shadow(0 0 10px rgba(255,255,255,0.45));
+    }
+
+    .home-button:hover {
+      filter: brightness(1.15);
+      transform: translateY(-2px);
+    }
+
+    /* --- 2x2 feature tiles --- */
+
+    .home-tiles {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      max-width: 330px;
+      margin: 12px auto 0;
+    }
+
+    .home-tile {
+      min-height: 64px;
+      display: grid;
+      gap: 5px;
+      place-items: center;
+      border-radius: 16px;
+      border: 1px solid #ffffff16;
+      background: #ffffff0b;
+      transition: transform .2s, filter .2s, background .2s;
+      padding: 10px 8px;
+    }
+
+    .home-tile:hover {
+      background: #ffffff14;
+      transform: translateY(-2px);
+    }
+
+    .home-tile:active {
+      transform: scale(.96);
+    }
+
+    .home-tile-icon {
+      font-size: 20px;
+      color: #9be9ff;
+      text-shadow: 0 0 14px #65eaff88;
+    }
+
+    .home-tile img {
+      width: 22px;
+      height: 22px;
+      object-fit: contain;
+      filter: drop-shadow(0 0 12px rgba(132, 220, 255, 0.9));
+    }
+
+    #homeShop .home-tile-icon {
+      color: #ffd66e;
+      text-shadow: 0 0 14px #ffd66e77;
+    }
+
+    #homeAchievements .home-tile-icon {
+      color: #ffb0e2;
+      text-shadow: 0 0 14px #ff78cf77;
+    }
+
+    #homeSettings .home-tile-icon {
+      color: #c3baff;
+      text-shadow: 0 0 14px #a08cff77;
+    }
+
+    .home-tile-label {
+      font-size: 9px;
+      font-weight: 900;
+      letter-spacing: 2px;
+      color: #dfe6ff;
+    }
+
+    .home-footer {
+      color: #687397;
+      font-size: 9px;
+      letter-spacing: 2px;
+      margin-top: 22px;
+    }
+
+    /* --- floating particles --- */
+
+    .home-particles {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .home-particle {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: #9cefff;
+      box-shadow: 0 0 12px #8beeff;
+      animation: particleFloat 5s ease-in-out infinite;
+    }
+
+    .home-particle:nth-child(1) { left: 8%; top: 25%; }
+    .home-particle:nth-child(2) { left: 88%; top: 20%; animation-delay: 1s; }
+    .home-particle:nth-child(3) { left: 15%; top: 75%; animation-delay: 2s; }
+    .home-particle:nth-child(4) { left: 90%; top: 70%; animation-delay: 1.5s; }
+    .home-particle:nth-child(5) { left: 50%; top: 12%; animation-delay: 2.5s; }
+
+    /* --- home modals (settings / shop) --- */
+
+    .home-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 10000;
+      display: grid;
+      place-items: center;
+      padding: 20px;
+      background: #050817e0;
+      backdrop-filter: blur(10px);
+    }
+
+    .home-modal.hidden {
+      display: none;
+    }
+
+    .home-modal-card {
+      width: min(100%, 380px);
+      max-height: 86vh;
+      overflow-y: auto;
+      padding: 28px 22px;
+      border-radius: 26px;
+      text-align: center;
+      border: 1px solid #ffffff26;
+      background: linear-gradient(150deg, #232a54, #12162e);
+      box-shadow: 0 25px 90px #000a, 0 0 46px #7c6cff2e;
+      animation: homeModalIn .3s ease both;
+    }
+
+    .home-modal-kicker {
+      color: #8eeeff;
+      font-size: 9px;
+      font-weight: 900;
+      letter-spacing: 3px;
+    }
+
+    .home-modal-card h2 {
+      margin: 10px 0 14px;
+      font-size: 26px;
+      letter-spacing: 1px;
+    }
+
+    .home-modal-card p {
+      color: #b5bddd;
+      font-size: 12px;
+      line-height: 1.6;
+      margin: 0 0 14px;
+    }
+
+    .home-modal-btn {
+      width: 100%;
+      min-height: 46px;
+      border-radius: 14px;
+      border: 1px solid #ffffff22;
+      background: #ffffff10;
+      color: #e4e9ff;
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: 2px;
+    }
+
+    .home-modal-btn:active {
+      transform: scale(.97);
+    }
+
+    .home-settings-sound {
+      width: 100%;
+      min-height: 46px;
+      margin-bottom: 14px;
+      border-radius: 14px;
+      border: 1px solid #67e8f955;
+      background: #67e8f914;
+      color: #9beefc;
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: 2px;
+    }
+
+    .home-wallet-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+
+    .home-wallet-cell {
+      padding: 10px 4px;
+      border-radius: 12px;
+      border: 1px solid #ffffff14;
+      background: #ffffff0a;
+    }
+
+    .home-wallet-cell small {
+      display: block;
+      color: #9aa3c6;
+      font-size: 8px;
+      font-weight: 900;
+      letter-spacing: 1px;
+    }
+
+    .home-wallet-cell b {
+      display: block;
+      margin-top: 5px;
+      color: #ffd66e;
+      font-size: 12px;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .home-history {
+      text-align: left;
+      display: grid;
+      gap: 6px;
+      max-height: 110px;
+      overflow-y: auto;
+      padding: 10px 12px;
+      margin-bottom: 16px;
+      border: 1px solid #ffffff12;
+      border-radius: 12px;
+      color: #aeb8d8;
+      font-size: 10px;
+      line-height: 1.4;
+    }
+
+    .home-reset-btn {
+      width: 100%;
+      min-height: 44px;
+      margin-bottom: 10px;
+      border-radius: 14px;
+      border: 1px solid #ff765f55;
+      background: #ff4b3514;
+      color: #ff9b8a;
+      font-size: 10px;
+      font-weight: 900;
+      letter-spacing: 1.5px;
+    }
+
+    .home-reset-btn.danger-armed {
+      background: #ff4b3533;
+      color: #fff;
+    }
+
+    .home-modal-wallet {
+      display: grid;
+      justify-items: center;
+      gap: 4px;
+      padding: 16px;
+      margin-bottom: 14px;
+      border-radius: 16px;
+      border: 1px solid #e8c76c44;
+      background: #e8c76c10;
+    }
+
+    .home-modal-wallet span {
+      font-size: 22px;
+    }
+
+    .home-modal-wallet b {
+      color: #ffd66e;
+      font-size: 22px;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .home-modal-wallet small {
+      color: #b9a878;
+      font-size: 8px;
+      font-weight: 900;
+      letter-spacing: 2px;
+    }
+
+    .home-modal-hint {
+      color: #8b95bd !important;
+      font-size: 10px !important;
+    }
+
+    /* --- keyframes --- */
+
+    @keyframes crystalFloat {
+      0%, 100% { transform: translateY(0) rotate(-5deg); }
+      50% { transform: translateY(-12px) rotate(5deg); }
+    }
+
+    @keyframes crystalGlow {
+      from { opacity: .35; transform: scale(.85); }
+      to { opacity: .7; transform: scale(1.12); }
+    }
+
+    @keyframes crystalRotate {
+      to { transform: rotate(360deg); }
+    }
+
+    @keyframes laserPulse {
+      0%, 100% { opacity: .25; }
+      50% { opacity: .85; }
+    }
+
+    @keyframes particleFloat {
+      0%, 100% { transform: translateY(0); opacity: .3; }
+      50% { transform: translateY(-22px); opacity: 1; }
+    }
+
+    @keyframes homeModalIn {
+      from { opacity: 0; transform: translateY(16px) scale(.96); }
+      to { opacity: 1; transform: none; }
+    }
+
+    /* --- responsive --- */
+
+    @media (max-height: 700px) {
+      #homeScreen { align-items: flex-start; }
+      .home-container { padding-top: 4px; }
+      .home-top { margin-bottom: 12px; }
+      .home-crystal-stage {
+        width: 140px;
+        height: 140px;
+        margin: 10px auto;
+      }
+      .home-crystal-ring { width: 128px; height: 128px; }
+      .home-crystal-ring-two { width: 96px; height: 96px; }
+      .home-crystal { font-size: 66px; }
+      .home-crystal-glow { width: 110px; height: 110px; }
+      .home-laser { width: 180px; }
+      .home-campaign { margin-bottom: 12px; }
+      .home-footer { margin-top: 14px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      #homeScreen *,
+      #homeScreen *::before,
+      #homeScreen *::after {
+        animation: none !important;
+        transition: none !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app">
+
+    <!-- =========================
+         HOME SCREEN
+    ========================== -->
+
+    <section id="homeScreen" aria-label="Light Bender home screen">
+      <div class="home-particles">
+        <span class="home-particle"></span>
+        <span class="home-particle"></span>
+        <span class="home-particle"></span>
+        <span class="home-particle"></span>
+        <span class="home-particle"></span>
+      </div>
+
+      <div class="home-container">
+
+        <header class="home-top">
+          <div class="home-brand">
+            <div class="home-brand-icon">✦</div>
+            <div>
+              <div class="home-brand-name">LIGHT BENDER</div>
+              <div class="home-brand-tag">PUZZLE • THINK • ILLUMINATE</div>
+            </div>
+          </div>
+
+          <div class="home-top-actions">
+            <button id="homeSound" class="home-sound-btn" aria-label="Toggle sound">
+              <img src="/assets/ui/buttons/hyper-sound-btn.png" alt="Sound" />
+            </button>
+            <div class="home-wallet" title="Gold coins">
+              <img src="/assets/ui/icons/hyper-coin.png" alt="Gold coins" />
+              <span id="homeGold">0</span>
+            </div>
+          </div>
+        </header>
+
+        <div class="home-hero">
+          <div class="home-eyebrow">WELCOME TO THE WORLD OF LIGHT</div>
+          <h1 class="home-title">LIGHT<br>BENDER</h1>
+          <div class="home-subtitle">ONE BEAM. A THOUSAND POSSIBILITIES.</div>
+        </div>
+
+        <div class="home-crystal-stage">
+          <div class="home-crystal-glow"></div>
+          <div class="home-crystal-ring"></div>
+          <div class="home-crystal-ring home-crystal-ring-two"></div>
+          <div class="home-laser home-laser-a"></div>
+          <div class="home-laser home-laser-b"></div>
+          <div class="home-crystal">◆</div>
+        </div>
+
+        <div class="home-campaign">
+          <div class="home-campaign-row">
+            <span class="home-campaign-label">CAMPAIGN</span>
+            <span id="homeCampaignLevel" class="home-campaign-value">01 / 100</span>
+            <span id="homeCampaignStars" class="home-campaign-stars">0 / 300 ★</span>
+          </div>
+          <div class="home-campaign-track">
+            <div id="homeCampaignBar" class="home-campaign-bar"></div>
+          </div>
+          <div id="homeCampaignSolved" class="home-campaign-solved">0 PUZZLES SOLVED</div>
+        </div>
+
+        <div class="home-buttons">
+          <button id="homeContinue" class="home-button home-button-primary asset-button" type="button">
+            <img src="/assets/ui/buttons/hyper-play-btn.png" alt="Continue" />
+            <span>CONTINUE GAME</span>
+          </button>
+
+          <button id="homePlay" class="home-button home-button-play asset-button" type="button">
+            <img src="/assets/ui/buttons/coco-play-btn.png" alt="Play" />
+            <span>PLAY GAME</span>
+          </button>
+        </div>
+
+        <div class="home-tiles">
+          <button id="homeLevels" class="home-tile" type="button">
+            <img src="/assets/ui/icons/hyper-star.png" alt="Levels" />
+            <span class="home-tile-label">LEVELS</span>
+          </button>
+
+          <button id="homeShop" class="home-tile" type="button">
+            <img src="/assets/ui/icons/hyper-gift.png" alt="Shop" />
+            <span class="home-tile-label">SHOP</span>
+          </button>
+
+          <button id="homeAchievements" class="home-tile" type="button">
+            <img src="/assets/ui/icons/hyper-trophy.png" alt="Badges" />
+            <span class="home-tile-label">BADGES</span>
+          </button>
+
+          <button id="homeSettings" class="home-tile" type="button">
+            <img src="/assets/ui/buttons/hyper-settings-btn.png" alt="Settings" />
+            <span class="home-tile-label">SETTINGS</span>
+          </button>
+        </div>
+
+        <div class="home-footer">
+          DESIGNED FOR CURIOUS MINDS
+        </div>
+
+      </div>
+    </section>
+
+    <!-- =========================
+         EXISTING GAME HEADER
+    ========================== -->
+
+    <header class="topbar">
+      <div class="brand">
+        <span class="brand-mark" aria-hidden="true">✧</span>
+        <div>
+          <strong>LIGHT BENDER</strong>
+          <small>ONE BEAM. A THOUSAND POSSIBILITIES.</small>
+        </div>
+      </div>
+
+      <div class="top-actions">
+        <button id="homeBtn" class="icon-btn" aria-label="Back to home screen">
+          <img src="/assets/ui/buttons/hyper-home-btn.png" alt="Home" />
+        </button>
+        <button id="mapBtn" class="map-open-btn">LEVEL MAP</button>
+        <button id="soundBtn" class="icon-btn" aria-label="Toggle sound" title="Toggle sound">
+          <img src="/assets/ui/buttons/hyper-sound-btn.png" alt="Sound" />
+        </button>
+      </div>
+    </header>
+
+    <!-- =========================
+         EXISTING PUZZLE GAME
+    ========================== -->
+
+    <main class="game-main">
+      <section class="level-row">
+        <button id="backBtn" class="icon-btn" aria-label="Previous level">‹</button>
+
+        <div class="level-heading">
+          <span class="eyebrow">PUZZLE</span>
+          <h1 id="levelTitle">LEVEL 01</h1>
+          <span id="worldLabel" class="world-badge">WORLD 1 · FIRST LIGHT</span>
+        </div>
+
+        <div class="level-right">
+          <span class="eyebrow">MOVES</span>
+          <strong id="moves">0</strong>
+        </div>
+      </section>
+
+      <section class="level-progress-card" aria-label="Campaign progress">
+        <div class="level-progress-meta">
+          <span>CAMPAIGN PROGRESS</span>
+          <strong id="levelProgressValue">LEVEL 01 / 100</strong>
+        </div>
+        <div class="progress-track">
+          <div id="progressFill"></div>
+        </div>
+      </section>
+
+      <div class="stats-row">
+        <span class="stat-card mirror-stat"><span>◇ MIRRORS</span><strong id="mirrorCount">2</strong></span>
+        <span class="stat-card best-stat"><span>✦ BEST</span><strong id="bestMoves">—</strong></span>
+        <span class="stat-card star-stat"><span>★ STARS</span><strong id="levelStars">☆☆☆</strong></span>
+      </div>
+
+      <section class="mission">
+        <span class="mission-icon">◎</span>
+        <div>
+          <strong>Light up the crystal</strong>
+          <p>Rotate mirrors and use special tiles to guide the laser.</p>
+        </div>
+      </section>
+
+      <section class="board-wrap">
+        <canvas id="gameCanvas" width="700" height="700"
+          aria-label="Laser mirror puzzle board"></canvas>
+      </section>
+
+      <div id="message" class="message" aria-live="polite">
+        Tap a mirror to rotate it.
+      </div>
+
+      <section class="controls">
+        <button id="hintBtn" class="game-action hint-action" type="button"><span aria-hidden="true">☼</span> HINT</button>
+        <button id="resetBtn" class="game-action reset-action" type="button"><span aria-hidden="true">↻</span> RESET</button>
+        <button id="pauseBtn" class="game-action pause-action" type="button"><span aria-hidden="true">Ⅱ</span> PAUSE</button>
+        <button id="nextBtn" class="game-action next-action" type="button" disabled><span aria-hidden="true">➜</span> NEXT LEVEL</button>
+      </section>
+
+      <section class="mechanics-legend">
+        <span>◈ FILTER</span>
+        <span>⑂ SPLITTER</span>
+        <span>▥ GATE</span>
+        <span>◎ TELEPORT</span>
+        <span>Ⓢ SWITCH</span>
+      </section>
+
+      <section class="level-footer">
+        <span>✦ 100 PUZZLES</span>
+        <span>YOUR PROGRESS SAVES AUTOMATICALLY</span>
+      </section>
+    </main>
+
+    <!-- PAUSE PANEL -->
+    <div id="pauseModal" class="modal pause-modal hidden" role="dialog" aria-modal="true" aria-labelledby="pauseTitle">
+      <div class="modal-card pause-card">
+        <div class="pause-emblem" aria-hidden="true">Ⅱ</div>
+        <span class="eyebrow">TAKE A BREATHER</span>
+        <h2 id="pauseTitle">GAME PAUSED</h2>
+        <p>Your puzzle is waiting right where you left it.</p>
+        <div class="pause-actions">
+          <button id="resumeBtn" class="casual-button button-purple" type="button">▶ &nbsp; RESUME GAME</button>
+          <button id="pauseRestartBtn" class="casual-button button-pink" type="button">↻ &nbsp; RESTART LEVEL</button>
+          <button id="pauseMapBtn" class="casual-button button-cyan" type="button">▦ &nbsp; LEVEL MAP</button>
+          <button id="pauseSettingsBtn" class="casual-button button-lavender" type="button">⚙ &nbsp; SETTINGS</button>
+          <button id="pauseHomeBtn" class="casual-button button-white" type="button">⌂ &nbsp; MAIN MENU</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- LEVEL MAP -->
+
+    <div id="mapModal" class="modal hidden"
+      aria-modal="true" role="dialog" aria-labelledby="mapTitle">
+
+      <div class="map-card">
+        <div class="map-head">
+          <div>
+            <span class="eyebrow">YOUR JOURNEY</span>
+            <h2 id="mapTitle">LEVEL SELECT</h2>
+          </div>
+
+          <button id="closeMapBtn" class="icon-btn"
+            aria-label="Close level map">×</button>
+        </div>
+
+        <div class="campaign-summary">
+          <span id="campaignProgress">1 / 100 UNLOCKED</span>
+          <span id="campaignStars">0 / 300 STARS</span>
+        </div>
+
+        <div id="worldSections" class="world-sections"></div>
+      </div>
+    </div>
+
+    <!-- WIN MODAL -->
+
+    <div id="winModal" class="modal hidden">
+      <div class="modal-card win-card">
+        <div class="win-orb">✦</div>
+        <span class="eyebrow">PUZZLE SOLVED</span>
+        <h2>LEVEL COMPLETED!</h2>
+        <p>You guided the light to its destination.</p>
+        <div id="earnedStars" class="stars" aria-label="Stars earned">
+          ★ ★ ★
+        </div>
+        <p id="winDetail" class="win-detail">Puzzle completed</p>
+        <p id="winReward" class="win-reward hidden"></p>
+        <div class="win-actions">
+          <button id="modalNextBtn" class="casual-button button-purple" type="button">NEXT LEVEL &nbsp; →</button>
+          <button id="replayBtn" class="casual-button button-pink" type="button">↻ &nbsp; REPLAY</button>
+          <button id="winMapBtn" class="casual-button button-cyan" type="button">▦ &nbsp; LEVEL MAP</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script type="module" src="/src/main.ts"></script>
+
+</body>
+</html>
